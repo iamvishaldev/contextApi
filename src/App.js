@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+
+const MyContext = React.createContext();
+
+const Coder3 = () => {
+  return (
+    <MyContext.Consumer>
+      {(data) => {
+        return (
+          <>
+            <h1>{data.name}</h1>
+            <h1>{data.age}</h1>
+          </>
+        );
+      }}
+    </MyContext.Consumer>
+  );
+};
+
+const Coder2 = () => {
+  return (
+    <div>
+      <MyContext.Consumer>
+        {(data) => {
+          return (
+            <>
+              <h1>{data.age}</h1>
+            </>
+          );
+        }}
+      </MyContext.Consumer>
+      <Coder3 />
+    </div>
+  );
+};
+
+const Coder = () => {
+  return <Coder2 />;
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyContext.Provider value={{ name: "vishal", age: 23 }}>
+      <div className="App">
+        <h2>Context Api</h2>
+        <Coder />
+      </div>
+    </MyContext.Provider>
   );
 }
 
